@@ -17,24 +17,18 @@ public class SqliteConnector {
     }
 
     public Connection getConnection() {
-        Connection conn = null;
+        Connection conn;
         try {
             String url = "jdbc:sqlite:" + dbFile;
             conn = DriverManager.getConnection(url);
+
             logger.logInfo("Connection to SQLite has been established.");
 
+            return conn;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }finally {
-            try{
-                if(conn != null){
-                    conn.close();
-                }
-            }catch (SQLException ex){
-                logger.logError(ex.getMessage());
-            }
         }
 
-        return conn;
+        return null;
     }
 }

@@ -59,7 +59,7 @@ public class DatabaseManagerImpl implements DatabaseManager {
             connection.setAutoCommit(true);
             Statement statement = connection.createStatement();
             for (String query : queries) {
-                statement.executeUpdate(query);
+                statement.execute(query);
             }
             statement.close();
             connection.close();
