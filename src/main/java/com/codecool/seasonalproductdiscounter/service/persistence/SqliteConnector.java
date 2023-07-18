@@ -19,7 +19,7 @@ public class SqliteConnector {
     public Connection getConnection() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(dbFile);
+            conn = DriverManager.getConnection("jdbc:sqlite:" + dbFile);
             logger.logInfo("Connection to SQLite has been established.");
 
         } catch (SQLException e) {
@@ -34,6 +34,6 @@ public class SqliteConnector {
             }
         }
 
-        return null;
+        return conn;
     }
 }

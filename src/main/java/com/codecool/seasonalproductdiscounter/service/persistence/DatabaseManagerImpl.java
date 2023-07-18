@@ -41,12 +41,12 @@ public class DatabaseManagerImpl implements DatabaseManager {
     }
 
     private boolean executeQueries(Iterable<String> queries) {
-        try {
-            //Complete the method
-        } catch (SQLException e) {
-            logger.logError(e.getMessage());
-            return false;
-        }
+//        try {
+//            //Complete the method
+//        } catch (SQLException e) {
+//            logger.logError(e.getMessage());
+//            return false;
+//        }
 
         return true;
     }

@@ -31,7 +31,8 @@ public class Application {
 
         String dbFile = "src/main/resources/SeasonalProductDiscounter.db";
         SqliteConnector sqliteConnector = new SqliteConnector(dbFile, logger);
-        DatabaseManager dbManager = new DatabaseManagerImpl(sqliteConnector, logger);
+        sqliteConnector.getConnection();
+        //DatabaseManager dbManager = new DatabaseManagerImpl(sqliteConnector, logger);
 //        DiscountProvider discountProvider = new DiscountProviderImpl();
 //        DiscountService discounterService = new DiscountServiceImpl(discountProvider);
 //        AuthenticationService authenticationService = new AuthenticationServiceImpl();
@@ -40,7 +41,7 @@ public class Application {
 //        UserRepository userRepository = null;
 //        TransactionRepository transactionRepository = null;
 //
-        dbManager.createTables();
+    //    dbManager.createTables();
 //        initializeDatabase(productRepository);
 //
 //        TransactionsSimulator simulator = new TransactionsSimulator(logger, userRepository, productRepository,
