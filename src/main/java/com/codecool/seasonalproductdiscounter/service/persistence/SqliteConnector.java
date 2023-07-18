@@ -19,7 +19,8 @@ public class SqliteConnector {
     public Connection getConnection() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:" + dbFile);
+            String url = "jdbc:sqlite:" + dbFile;
+            conn = DriverManager.getConnection(url);
             logger.logInfo("Connection to SQLite has been established.");
 
         } catch (SQLException e) {

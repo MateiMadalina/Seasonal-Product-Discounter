@@ -12,9 +12,22 @@ public class DatabaseManagerImpl implements DatabaseManager {
     public static final String USERS_TABLE_NAME = "users";
     public static final String TRANSACTIONS_TABLE_NAME = "transactions";
 
-    private static final String PRODUCTS_TABLE_STATEMENT = "";
+    private static final String PRODUCTS_TABLE_STATEMENT =
+            String.format("CREATE TABLE IF NOT EXISTS %s (" +
+                            "id INTEGER PRIMARY KEY, " +
+                            "name TEXT NOT NULL, " +
+                            "color TEXT NOT NULL, " +
+                            "season TEXT NOT NULL, " +
+                            "price REAL NOT NULL, " +
+                            "sold INTEGER NOT NULL);",
+                    PRODUCTS_TABLE_NAME);
 
-    private static final String USERS_TABLE_STATEMENT ="";
+    private static final String USERS_TABLE_STATEMENT =
+            String.format("CREATE TABLE IF NOT EXISTS %s (" +
+                            "id INTEGER PRIMARY KEY, " +
+                            "name TEXT NOT NULL UNIQUE, " +
+                            "password TEXT);",
+                    USERS_TABLE_NAME);
 
     private static final String TRANSACTIONS_TABLE_STATEMENT =
             String.format("CREATE TABLE IF NOT EXISTS %s (" +
@@ -41,12 +54,19 @@ public class DatabaseManagerImpl implements DatabaseManager {
     }
 
     private boolean executeQueries(Iterable<String> queries) {
-//        try {
-//            //Complete the method
-//        } catch (SQLException e) {
-//            logger.logError(e.getMessage());
-//            return false;
-//        }
+        try  {
+            Connection connection = sqliteConnector.getConnection();
+            connection.setAutoCommit(true);
+            Statement statement = connection.createStatement();
+            for (String query : queries) {
+                statement.executeUpdate(query);
+            }
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            logger.logError(e.getMessage());
+            return false;
+        }
 
         return true;
     }
