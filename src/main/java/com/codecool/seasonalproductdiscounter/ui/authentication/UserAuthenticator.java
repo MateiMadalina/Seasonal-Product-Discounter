@@ -18,8 +18,9 @@ public class UserAuthenticator {
         String userName = getTextInput("Please enter your username: ");
         String password = getTextInput("Please enter your password: ");
 
-//        return new User(userName, password);
-        return null;
+      //return new User(userName, password);
+      return null;
+
     }
 
     private String getTextInput(String text) {

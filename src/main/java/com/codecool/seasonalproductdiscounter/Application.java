@@ -3,6 +3,12 @@ package com.codecool.seasonalproductdiscounter;
 import com.codecool.seasonalproductdiscounter.model.products.Product;
 import com.codecool.seasonalproductdiscounter.model.transactions.Transaction;
 import com.codecool.seasonalproductdiscounter.model.transactions.TransactionsSimulatorSettings;
+import com.codecool.seasonalproductdiscounter.service.authentication.AuthenticationService;
+import com.codecool.seasonalproductdiscounter.service.authentication.AuthenticationServiceImpl;
+import com.codecool.seasonalproductdiscounter.service.discounts.DiscountProvider;
+import com.codecool.seasonalproductdiscounter.service.discounts.DiscountProviderImpl;
+import com.codecool.seasonalproductdiscounter.service.discounts.DiscountService;
+import com.codecool.seasonalproductdiscounter.service.discounts.DiscountServiceImpl;
 import com.codecool.seasonalproductdiscounter.service.logger.ConsoleLogger;
 import com.codecool.seasonalproductdiscounter.service.logger.Logger;
 import com.codecool.seasonalproductdiscounter.service.persistence.DatabaseManager;
@@ -27,9 +33,9 @@ public class Application {
 
 
         DatabaseManager dbManager = new DatabaseManagerImpl(sqliteConnector, logger);
-//        DiscountProvider discountProvider = new DiscountProviderImpl();
-//        DiscountService discounterService = new DiscountServiceImpl(discountProvider);
-//        AuthenticationService authenticationService = new AuthenticationServiceImpl();
+        DiscountProvider discountProvider = new DiscountProviderImpl();
+        DiscountService discounterService = new DiscountServiceImpl(discountProvider);
+        AuthenticationService authenticationService = new AuthenticationServiceImpl();
 //
        ProductRepository productRepository = new ProductRepositoryImpl(sqliteConnector,logger);
 //        UserRepository userRepository = null;
