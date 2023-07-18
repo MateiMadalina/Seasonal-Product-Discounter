@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="SeasonalProductDiscounter.db" uuid="dd86f0c7-a782-4647-9ed6-08115dffb788">
+    <data-source source="LOCAL" name="SeasonalProductDiscounter2.db" uuid="dd86f0c7-a782-4647-9ed6-08115dffb788">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Proiecte Java\seasonal-product-discounter-4-1q2023-java-MateiMadalina\src\main\resources\SeasonalProductDiscounter.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Proiecte Java\seasonal-product-discounter-4-1q2023-java-MateiMadalina\src\main\resources\SeasonalProductDiscounter2.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
