@@ -32,26 +32,25 @@ public class Application {
         String dbFile = "src/main/resources/SeasonalProductDiscounter.db";
         SqliteConnector sqliteConnector = new SqliteConnector(dbFile, logger);
         DatabaseManager dbManager = new DatabaseManagerImpl(sqliteConnector, logger);
-
-        DiscountProvider discountProvider = new DiscountProviderImpl();
-        DiscountService discounterService = new DiscountServiceImpl(discountProvider);
-        AuthenticationService authenticationService = new AuthenticationServiceImpl();
-
-        ProductRepository productRepository = null;
-        UserRepository userRepository = null;
-        TransactionRepository transactionRepository = null;
-
+//        DiscountProvider discountProvider = new DiscountProviderImpl();
+//        DiscountService discounterService = new DiscountServiceImpl(discountProvider);
+//        AuthenticationService authenticationService = new AuthenticationServiceImpl();
+//
+//        ProductRepository productRepository = null;
+//        UserRepository userRepository = null;
+//        TransactionRepository transactionRepository = null;
+//
         dbManager.createTables();
-        initializeDatabase(productRepository);
-
-        TransactionsSimulator simulator = new TransactionsSimulator(logger, userRepository, productRepository,
-                authenticationService, discounterService, transactionRepository);
-
-        //RunSimulation(simulator, productRepository, transactionRepository);
-
-        System.out.println("Press any key to exit.");
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
+//        initializeDatabase(productRepository);
+//
+//        TransactionsSimulator simulator = new TransactionsSimulator(logger, userRepository, productRepository,
+//                authenticationService, discounterService, transactionRepository);
+//
+//        RunSimulation(simulator, productRepository, transactionRepository);
+//
+//        System.out.println("Press any key to exit.");
+//        Scanner scanner = new Scanner(System.in);
+//        scanner.nextLine();
 
 
     }
