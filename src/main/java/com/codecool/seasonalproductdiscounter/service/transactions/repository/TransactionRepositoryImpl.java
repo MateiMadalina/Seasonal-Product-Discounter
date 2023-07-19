@@ -1,12 +1,19 @@
 package com.codecool.seasonalproductdiscounter.service.transactions.repository;
 
+import com.codecool.seasonalproductdiscounter.model.enums.Color;
+import com.codecool.seasonalproductdiscounter.model.enums.Season;
+import com.codecool.seasonalproductdiscounter.model.products.Product;
 import com.codecool.seasonalproductdiscounter.model.transactions.Transaction;
+import com.codecool.seasonalproductdiscounter.model.users.User;
 import com.codecool.seasonalproductdiscounter.service.logger.Logger;
 import com.codecool.seasonalproductdiscounter.service.persistence.SqliteConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionRepositoryImpl implements TransactionRepository{
@@ -39,6 +46,45 @@ public class TransactionRepositoryImpl implements TransactionRepository{
 
     @Override
     public List<Transaction> getAll() {
-        return null;
+        List<Transaction> transactions = new ArrayList<>();
+        String sql = "SELECT id , date, user_id , users.name AS user_name, users.password AS password, " +
+                "product_id, products.name AS product_name, products.color AS product_color, " +
+                "products.season AS product_season, products.price AS price, products.sold AS sold" +
+                "FROM transactions " +
+                "INNER JOIN products ON products.id = transaction.id " +
+                "INNER JOIN  users ON users.id = transaction.id;";
+
+        try (Connection conn = sqliteConnector.getConnection();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+             ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int productId = resultSet.getInt("product_id");
+                String productName = resultSet.getString("product_name");
+                String colorString = resultSet.getString("product_color");
+                String seasonString = resultSet.getString("product_season");
+                Double price = resultSet.getDouble("price");
+                Boolean sold = resultSet.getBoolean("sold");
+                Color color = Color.valueOf(colorString);
+                Season season = Season.valueOf(seasonString);
+                Product product = new Product(productId, productName,color,season,price,sold);
+
+                int userId = resultSet.getInt("user_id");
+                String name = resultSet.getString("user_name");
+                String password = resultSet.getString("password");
+                User user = new User(userId,name,password);
+
+                int transactionID = resultSet.getInt("id");
+                LocalDate date = LocalDate.parse(resultSet.getString("date"));
+
+                Transaction transaction = new Transaction(transactionID, date, user,product,price);
+                transactions.add(transaction);
+            }
+
+
+        } catch (SQLException e) {
+            logger.logError(e.getMessage());
+        }
+        return transactions;
     }
 }
