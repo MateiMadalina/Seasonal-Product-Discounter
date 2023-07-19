@@ -24,6 +24,7 @@ import com.codecool.seasonalproductdiscounter.service.users.UserRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Scanner;
 
 public class Application {
     public static void main(String[] args) {
@@ -48,15 +49,14 @@ public class Application {
         dbManager.createTables();
         initializeDatabase(productRepository);
 
-//        TransactionsSimulator simulator = new TransactionsSimulator(logger, userRepository, productRepository,
-//                authenticationService, discounterService, transactionRepository);
-//
-//        RunSimulation(simulator, productRepository, transactionRepository);
-//
-//        System.out.println("Press any key to exit.");
-//        Scanner scanner = new Scanner(System.in);
-//        scanner.nextLine();
+        TransactionsSimulator simulator = new TransactionsSimulator(logger, userRepository, productRepository,
+                authenticationService, discounterService, transactionRepository);
 
+        RunSimulation(simulator, productRepository, transactionRepository);
+
+       System.out.println("Press any key to exit.");
+       Scanner scanner = new Scanner(System.in);
+       scanner.nextLine();
 
     }
 
@@ -74,15 +74,16 @@ public class Application {
         LocalDate date = LocalDate.now();
 
         // set your own condition
-        while (true) {
+        //while (true) {
             System.out.println("Starting simulation...");
             simulator.run(new TransactionsSimulatorSettings(date, 100, 70));
 
             List<Transaction> transactions = transactionRepository.getAll();
+            System.out.println(transactions);
             System.out.println(date + " ended, total transactions: " + transactions.size() + ", total income: "
                     + transactions.stream().mapToDouble(Transaction::pricePaid).sum());
             System.out.println("Products left to sell: " + productRepository.getAvailableProducts().size());
-        }
+       // }
     }
 
 
