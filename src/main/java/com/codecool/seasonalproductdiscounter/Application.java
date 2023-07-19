@@ -28,22 +28,16 @@ import java.util.Scanner;
 
 public class Application {
     public static void main(String[] args) {
-
         Logger logger = new ConsoleLogger();
-
         String dbFile = "src/main/resources/SeasonalProductDiscounter2.db";
+
         SqliteConnector sqliteConnector = new SqliteConnector(dbFile, logger);
-
-
         DatabaseManager dbManager = new DatabaseManagerImpl(sqliteConnector, logger);
         DiscountProvider discountProvider = new DiscountProviderImpl();
         DiscountService discounterService = new DiscountServiceImpl(discountProvider);
-
-
         ProductRepository productRepository = new ProductRepositoryImpl(sqliteConnector,logger);
         UserRepository userRepository = new UserRepositoryImpl(sqliteConnector,logger);
         TransactionRepository transactionRepository = new TransactionRepositoryImpl(logger,sqliteConnector);
-
         AuthenticationService authenticationService = new AuthenticationServiceImpl(userRepository);
 
         dbManager.createTables();
@@ -54,10 +48,9 @@ public class Application {
 
         RunSimulation(simulator, productRepository, transactionRepository);
 
-       System.out.println("Press any key to exit.");
-       Scanner scanner = new Scanner(System.in);
-       scanner.nextLine();
-
+        System.out.println("Press any key to exit.");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
     }
 
     private static void initializeDatabase(ProductRepository productRepository) {
@@ -70,21 +63,13 @@ public class Application {
 
     private static void RunSimulation(TransactionsSimulator simulator, ProductRepository productRepository,
                                       TransactionRepository transactionRepository) {
-        int days = 0;
-        LocalDate date = LocalDate.now();
-
-        // set your own condition
-        //while (true) {
+            LocalDate date = LocalDate.now();
             System.out.println("Starting simulation...");
             simulator.run(new TransactionsSimulatorSettings(date, 100, 70));
-
             List<Transaction> transactions = transactionRepository.getAll();
             System.out.println(transactions);
             System.out.println(date + " ended, total transactions: " + transactions.size() + ", total income: "
                     + transactions.stream().mapToDouble(Transaction::pricePaid).sum());
             System.out.println("Products left to sell: " + productRepository.getAvailableProducts().size());
-       // }
     }
-
-
 }
